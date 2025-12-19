@@ -48,24 +48,7 @@ The design was verified using **Xilinx Vivado Behavioral Simulation**.
 * **Action 2:** Deposit 20 units (Total = 30)
 * **Result:** `dispense` signal goes HIGH.
 
-![image alt](
+![image alt](https://github.com/Kaarannnnnnnn/Soda_Dispenser_FSM/blob/560b1304b05eff0fddd04a19669c5d6671c4ec97/waveform.png)
 
-## 🚀 How to Run
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone [https://github.com/your-username/soda-dispenser-verilog.git](https://github.com/your-username/soda-dispenser-verilog.git)
-    ```
-2.  **Open in Vivado/ModelSim:**
-    * Add `soda_dispenser.v` as the Design Source.
-    * Add `soda_dispenser_tb.v` as the Simulation Source.
-3.  **Run Simulation:**
-    * Execute Behavioral Simulation for 100ns.
 
-## 📂 File Structure
-
-```text
-├── soda_dispenser.v       # Main RTL Design Module
-├── soda_dispenser_tb.v    # Testbench for verification
-├── assets/                # Images (Schematics, Waveforms)
-└── README.md              # Project Documentation
