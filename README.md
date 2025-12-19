@@ -24,9 +24,8 @@ The design consists of two main units:
     * Performs arithmetic addition (`tot = tot + coin_value`).
     * Compares the total against the set soda cost.
 
-### 🧩 Block Diagram
-*(Upload your schematic screenshot here to visualize the hardware)*
-![RTL Schematic](link_to_your_schematic_image.png)
+### 🧩 Schematic
+![image alt](https://github.com/Kaarannnnnnnn/Soda_Dispenser_FSM/blob/695593396e132eb5813ad203450dca5fd51e77b4/schematic.png)
 
 ## 🛠️ Finite State Machine (FSM) Logic
 
