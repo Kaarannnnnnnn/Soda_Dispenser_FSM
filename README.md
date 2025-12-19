@@ -48,7 +48,7 @@ The design was verified using **Xilinx Vivado Behavioral Simulation**.
 * **Action 2:** Deposit 20 units (Total = 30)
 * **Result:** `dispense` signal goes HIGH.
 
-![Waveform Result](link_to_your_waveform_image.png)
+![image alt](
 
 ## 🚀 How to Run
 
