@@ -1,37 +1,42 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Module Name:    Soda_dispenser_logic
-// Project Name:   Soda Dispenser FSM Design
-// Description:    Finite State Machine with Datapath (FSMD) implementation 
-//                 for a soda dispenser. 
-//                 - Controller handles state transitions (Init, Wait, Add, Disp)
-//                 - Datapath handles 8-bit addition and cost comparison
-//
-// Dependencies:   None
-// Revision:       1.0
+// Company: 
+// Engineer: 
+// 
+// Create Date: 19.12.2025 14:14:31
+// Design Name: 
+// Module Name: Soda_dispenser_logic
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
 //////////////////////////////////////////////////////////////////////////////////
 
+
 module Soda_dispenser_logic(
-    input clk,          // System Clock
-    input reset,        // Asynchronous Reset
-    input c,            // Coin Detected Signal
-    input [7:0] a,      // Value of deposited coin (8-bit)
-    input [7:0] s,      // Cost of soda (8-bit)
-    output reg d        // Dispense Signal (1 = Dispense, 0 = Wait)
+    input clk, reset,
+    input c,
+    input [7:0] a,
+    input [7:0] s,
+    output reg d  
 );
    
-    // --- State Encoding ---
-    parameter INIT = 2'b00;
-    parameter WAIT = 2'b01;
-    parameter ADD  = 2'b10;
-    parameter DISP = 2'b11; 
+   parameter INIT    = 2'b00;
+   parameter WAIT    = 2'b01;
+   parameter ADD     = 2'b10;
+   parameter DISP    = 2'b11; 
    
-    reg [1:0] current_state, next_state;
-    reg [7:0] tot;      // The 'Total' Register (Accumulator)
+   reg [1:0] current_state, next_state;
+   reg [7:0] tot;
 
-    // -------------------------------------------------------------------------
-    // 1. State Register Logic (Sequential)
-    // -------------------------------------------------------------------------
+    // State Register Logic
     always @(posedge clk or posedge reset) begin
         if (reset)
             current_state <= INIT;
@@ -39,11 +44,8 @@ module Soda_dispenser_logic(
             current_state <= next_state;
     end
 
-    // -------------------------------------------------------------------------
-    // 2. Next State Logic (Combinational Controller)
-    // -------------------------------------------------------------------------
+    // Next State Logic
     always @(*) begin
-        // Default assignments to prevent latches
         next_state = current_state;
         d = 1'b0;
 
@@ -54,40 +56,37 @@ module Soda_dispenser_logic(
 
             WAIT: begin
                 if (c) 
-                    next_state = ADD;       // Coin detected -> Go add it
+                    next_state = ADD;
                 else if (tot >= s) 
-                    next_state = DISP;      // Cost met -> Go dispense
+                    next_state = DISP; 
                 else
-                    next_state = WAIT;      // Else -> Keep waiting
+                    next_state = WAIT;
             end
 
             ADD: begin
-                next_state = WAIT;          // Return to wait after addition
+                next_state = WAIT;
             end
 
             DISP: begin 
-                d = 1'b1;                   // Trigger Dispense Output
-                next_state = INIT;          // Reset system for next user
+                d = 1'b1;
+                next_state = INIT;
             end
             
             default: next_state = INIT;
         endcase
     end
     
-    // -------------------------------------------------------------------------
-    // 3. Datapath Logic (Sequential "Muscle")
-    // -------------------------------------------------------------------------
+    // Datapath Logic: Total Register ('tot')
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             tot <= 8'b0;
         end else begin
             case (current_state)
-                INIT:    tot <= 8'b0;       // Clear total
-                ADD:     tot <= tot + a;    // Accumulate coin value
-                DISP:    tot <= 8'b0;       // Clear after dispense
-                default: tot <= tot;        // Hold value
+                INIT:    tot <= 8'b0;
+                ADD:     tot <= tot + a;
+                DISP:    tot <= 8'b0;
+                default: tot <= tot;
             endcase
         end
     end
-
 endmodule
